@@ -910,4 +910,41 @@ total 248
 [root@jumpbox ~]# 
 ```
 
+
+# Revoke certificates:
+If you want to **revoke** (remove/invalidate) an already issued certificate from the LetsEncrypt server, you can use the certbot's `revoke` command. Below I have shown how to revoke a Staging wild-card certificate:
+
+```
+[root@jumpbox ~]# certbot revoke --staging  --cert-name demo.wbitt.com
+Saving debug log to /var/log/letsencrypt/letsencrypt.log
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Would you like to delete the cert(s) you just revoked, along with all earlier
+and later versions of the cert?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+(Y)es (recommended)/(N)o: Y
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Deleted all files relating to certificate demo.wbitt.com.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Congratulations! You have successfully revoked the certificate that was located
+at /etc/letsencrypt/live/demo.wbitt.com/fullchain.pem
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+[root@jumpbox ~]# 
+```
+
+```
+[root@jumpbox ~]# certbot certificates
+Saving debug log to /var/log/letsencrypt/letsencrypt.log
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+No certs found.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+[root@jumpbox ~]# 
+```
+
+
 This concludes this article.
