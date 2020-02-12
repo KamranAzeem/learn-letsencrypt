@@ -35,7 +35,8 @@ For ease of DNS configuration, (and overall ease of setup), I have actually setu
 jumpbox.demo.wbitt.com  IN  A       3.121.158.211
 ```
 
-![route53-dns-demo-wbitt-com.png](route53-dns-demo-wbitt-com.png)
+| ![route53-dns-demo-wbitt-com.png](route53-dns-demo-wbitt-com.png) |
+| ----------------------------------------------------------------- |
 
 This means, that without manually defining individual DNS records for `cat.demo.wbitt.com` or `dog.demo.wbitt.com`, or `rabbit.demo.wbitt.com` for example, I will be able to resolve them to the same IP. Here is how:
 
@@ -91,6 +92,7 @@ Configure Apache web server correctly. Make sure that the FQDNs you wish to use 
 [root@jumpbox ~]# mkdir -p /var/www/vhosts/{cat,dog,jumpbox}
 ```
 
+```
 [root@jumpbox ~]# cat /etc/httpd/conf.d/vhosts.conf 
 
 <VirtualHost *:80>
@@ -158,8 +160,6 @@ First, we get a staging certificate for just one VirtualHost (`cat.demo.wbitt.co
 ```
 certbot run  --apache --test-cert --preferred-challenges=http
 ```
-
-
 
 Actual output:
 ```
@@ -357,7 +357,8 @@ Lets ignore the "invalidity" of the certificate for a moment:
 
 So it works! Lets check it in a browser:
 
-![staging_cert_cat.png](staging_cert_cat.png)
+| ![staging_cert_cat.png](staging_cert_cat.png) |
+| --------------------------------------------- |
 
 
 It works!
@@ -546,7 +547,8 @@ Notice, I used `https://` and I got the expected web page, without any SSL error
 
 Lets have a look at browser too:
 
-![production_cert_cat.png](production_cert_cat.png)
+| ![production_cert_cat.png](production_cert_cat.png) |
+| --------------------------------------------------- |
 
 **Note:** Sometimes browsers cache the web-page and the related content, such as SSL certificates, and you may still see your invalid certificate popping up in browser after you have setup Production certificates. In that case use the "Private Browsing"/"Incognito" mode in a new browser window and try again.
 
@@ -864,9 +866,12 @@ systemctl restart httpd
 ### Verify:
 Notice that we have our hostnames/FQDNs accessible over HTTPS without any SSL errors. The certificate details show a Valid **wild-card** SSL certificate for each FQDN we accessed.
 
-![production_wildcard_cat.png](production_wildcard_cat.png)
+| ![production_wildcard_cat.png](production_wildcard_cat.png) |
+| ----------------------------------------------------------- |
 
-![production_wildcard_jumpbox.png](production_wildcard_jumpbox.png)
+| ![production_wildcard_jumpbox.png](production_wildcard_jumpbox.png) |
+| ------------------------------------------------------------------- |
+
 
 Hurray!
 
