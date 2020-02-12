@@ -851,9 +851,9 @@ Add these three Rewrite* commands/directives to `dog.demo.wbitt.com` and `jumpbo
 
 Then, edit the `/etc/httpd/conf.d/vhosts-le-ssl.conf` file and add a `VirtualHost *:443` section in the way shown below, for each virtual host you have in `/etc/httpd/conf.d/vhosts.conf` file. Since we are using a wild-card certificate, we will use the same path for `fullchain.pem` and `privkey.pem` file in all SSL virtual hosts (`cat`, `dog` and `jumpbox` ) 
 
+``
 [root@jumpbox vhosts]# cat /etc/httpd/conf.d/vhosts-le-ssl.conf 
 <IfModule mod_ssl.c>
-. . . 
 <VirtualHost *:443>
   DocumentRoot "/var/www/vhosts/cat"
   ServerName cat.demo.wbitt.com
@@ -862,16 +862,38 @@ SSLCertificateFile /etc/letsencrypt/live/demo.wbitt.com/fullchain.pem
 SSLCertificateKeyFile /etc/letsencrypt/live/demo.wbitt.com/privkey.pem
 Include /etc/letsencrypt/options-ssl-apache.conf
 </VirtualHost>
-
-. . . 
-
 </IfModule>
+
+<IfModule mod_ssl.c>
+<VirtualHost *:443>
+  DocumentRoot "/var/www/vhosts/dog"
+  ServerName dog.demo.wbitt.com
+
+SSLCertificateFile /etc/letsencrypt/live/demo.wbitt.com/fullchain.pem
+SSLCertificateKeyFile /etc/letsencrypt/live/demo.wbitt.com/privkey.pem
+Include /etc/letsencrypt/options-ssl-apache.conf
+</VirtualHost>
+</IfModule>
+
+
+<IfModule mod_ssl.c>
+<VirtualHost *:443>
+  DocumentRoot "/var/www/vhosts/jumpbox"
+  ServerName jumpbox.demo.wbitt.com
+
+SSLCertificateFile /etc/letsencrypt/live/demo.wbitt.com/fullchain.pem
+SSLCertificateKeyFile /etc/letsencrypt/live/demo.wbitt.com/privkey.pem
+Include /etc/letsencrypt/options-ssl-apache.conf
+</VirtualHost>
+</IfModule>
+
+
 [root@jumpbox vhosts]# 
 ```
 
 After these modifications, simply restart Apache server:
 
-```
+````
 systemctl restart httpd
 ```
 
