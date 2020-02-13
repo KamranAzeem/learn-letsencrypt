@@ -169,8 +169,36 @@ It is also a good idea to disable SELinux, which can get in your way. Or, setup 
 ```
 
 
-## Get Staging certificate using HTTP challenge:
-First, we get a staging certificate for just one VirtualHost (`cat.demo.wbitt.com`). The following will get a staging certificate and will also configure related Apache vhost to use that certificate. It will also restart the Apache service automatically.
+
+
+## Get LetsEncrypt Staging certificate using HTTP challenge:
+
+### Do a dry-run to ensure certificate everything is in order:
+
+```
+[root@jumpbox vhosts]# certbot certonly  --apache  --dry-run --preferred-challenges=http
+Saving debug log to /var/log/letsencrypt/letsencrypt.log
+Plugins selected: Authenticator apache, Installer apache
+
+Which names would you like to activate HTTPS for?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+1: jumpbox.witpass.co.uk
+2: cat.demo.wbitt.com
+3: dog.demo.wbitt.com
+4: jumpbox.demo.wbitt.com
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Select the appropriate numbers separated by commas and/or spaces, or leave input
+blank to select all options shown (Enter 'c' to cancel): 2
+Obtaining a new certificate
+
+IMPORTANT NOTES:
+ - The dry run was successful.
+[root@jumpbox vhosts]# 
+```
+
+Next, we get a staging certificate for just one VirtualHost (`cat.demo.wbitt.com`). 
+
+The following will get a staging certificate and will also configure related Apache vhost to use that certificate. It will also restart the Apache service automatically.
 
 
 ### Run certbot to get Staging certificate:
@@ -383,7 +411,7 @@ It works!
 
 ## Get Production certificate using HTTP challenge:
 
-Lets delete the existing certificate for `cat.demo.wbitt.com` and get a Production one instead. While we do that, lets get Production SSL certs for the hosts/FQDNs `dog.demo.wbitt.com` and `jumpbox.demo.wbitt.com`. Notice these are Vhosts defined in the `vhosts.conf` file. Note, that even though we can resolve imaginary names for our domain, such as `rabbit.demo.wbitt.com` , certbot will not find a vhost for it, and will not be able to update Apache's configuration for it. So we can only request SSL certificates for the hostnames/FQDNs defined explicitly as a VirtualHost. 
+Lets delete the existing certificate for `cat.demo.wbitt.com` and get a Production one instead. While we do that, lets get Production SSL certs for the hosts/FQDNs `dog.demo.wbitt.com` and `jumpbox.demo.wbitt.com`. Notice these are Vhosts defined in the `vhosts.conf` file. Note, that even though we can resolve imaginary names for our domain, such as `rabbit.demo.wbitt.com` , certbot will not find a vhost for it, and will not be able to update Apache's configuration for it. So we can only request SSL certificates for the host-names/DNS-names/FQDNs defined explicitly as a VirtualHost. 
 
 
 ### Delete the existing *Invalid* certificate:
@@ -603,7 +631,7 @@ Setup a cronjob to run at some **random time** of the day everyday, or at-least 
 
 
 ## Get Staging certificates using DNS challenge:
-We have seen how we can use Certobot, to obtain both Staging and Production SSL certitificates - from LetsEncrypt - using HTTP challenge. It is time to see how we can use DNS challenge to get wild-card certificates.
+We have seen how we can use Certbot, to obtain both Staging and Production SSL certificates - from LetsEncrypt - using HTTP challenge. It is time to see how we can use DNS challenge to get wild-card certificates.
 
 For this demo, I have done the following preparations:
 * Deleted the existing SSL certificates obtained by certbot
@@ -643,6 +671,7 @@ Deleted all files relating to certificate cat.demo.wbitt.com.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 [root@jumpbox ~]# 
 ```
+**Note:** It is better to revoke the certificate, which will delete it both from the web server, as well as the LetsEncrypt server.
 
 **Note:** During previous testing, certbot expanded the certificate of `cat.demo.wbitt.com` to include `dog` and `jumpbox` certificates. That is why you see this confusing certificate here. 
 
@@ -706,13 +735,13 @@ region = eu-central-1
 ```
 
 
-### Use certobot to get Staging wild-card SSL certificate: (`*.demo.wbitt.com`)
-Lets pull a wild-card certificate for our domain `demo.wbitt.com` from LetsEncrypt Staging server, using DNS challenge.
+### Use certbot to get Staging wild-card SSL certificate: (`*.demo.wbitt.com`)
 
 **Notes:** 
 * You cannot use any **Installer** (`--apache` | `--nginx`) when using DNS challenge for wild-card SSL certificate. This means, you will need to configure the Apache/Nginx configurations manually after you obtain the wild-card certificates.
 * When using DNS challenge, you can not use the `run` command, instead you can only use `certonly` command.
 
+First lets do a dry run to ensure everything is in order:
 ```
 [root@jumpbox ~]# certbot certonly --dry-run --preferred-challenges=dns --dns-route53  -d *.demo.wbitt.com 
 Saving debug log to /var/log/letsencrypt/letsencrypt.log
@@ -743,7 +772,7 @@ No certs found.
 ```
 
 
-To obtain the Staging certificates and store them on the disk, replace `--dry-run` with `test-cert`, as shown below:
+Lets pull a wild-card certificate for our domain `demo.wbitt.com` from LetsEncrypt Staging server, using DNS challenge. To obtain the Staging certificates and store them on the disk, replace `--dry-run` with `test-cert`, as shown below:
 
 ```
 [root@jumpbox ~]# certbot certonly --test-cert --preferred-challenges=dns --dns-route53  -d *.demo.wbitt.com 
@@ -784,7 +813,7 @@ Found the following certs:
 I am skipping the Apache configurations for now. I will do it only once when I get Production wild-card SSL certificate in the next section.
 
 
-### Use certobot to get Production wild-card SSL certificate: (`*.demo.wbitt.com`)
+### Use Certbot to get Production wild-card SSL certificate: (`*.demo.wbitt.com`)
 Since we see that the Staging certificate is pulled without problems, lets obtain Production wild-card certificate for our domain. 
 
 ```
@@ -903,7 +932,7 @@ After these modifications, simply restart Apache server:
 
 
 ### Verify:
-Notice that we have our hostnames/FQDNs accessible over HTTPS without any SSL errors. The certificate details show a Valid **wild-card** SSL certificate for each FQDN we accessed.
+Notice that we have our host-names/DNS-names/FQDNs accessible over HTTPS without any SSL errors. The certificate details show a Valid **wild-card** SSL certificate for each FQDN we accessed.
 
 | ![production_wildcard_cat.png](production_wildcard_cat.png) |
 | ----------------------------------------------------------- |
