@@ -1,6 +1,6 @@
 # Learn to use LetsEncrypt
 
-I will want to show you how easy it is to use LetsEncrypt to obtain free (and valid) SSL certificate for your web server. Later in the guide, I have provided links on using LetsEncrypt with Docker and with Kubernetes. First, "What is LetsEncrypt?"
+I will want to show you how easy it is to use LetsEncrypt to obtain free (and valid) SSL certificate for your web server - using HTTP and DNS challenges.
 
 Presentation on the same topic can be found [here](https://docs.google.com/presentation/d/1Hf7OLIFVJ3RhTvexMMymiwcbgQ93oYDMkt5NYnENFkE/edit?usp=sharing).
 
