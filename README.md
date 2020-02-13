@@ -15,6 +15,8 @@ Presentation on the same topic can be found [here](https://docs.google.com/prese
 * Maintains two certificate environments, **Staging** and **Production**. Staging is used for testing the certificate issuance process. Production is used, when everything is in order.
 * LetsEncrypt supports single/individual SSL certificate (`cat.demo.wbitt.com`) , and wild-card SSL certificate (`*.demo.wbitt.com`)
 * Supports HTTP-01, DNS-01 and TLS-ALPN-01 challenges
+* HTTP Challenge expects a file `http://<YOUR_DOMAIN>/.well-known/acme-challenge/<TOKEN>` placed on your web server
+* DNS challenge expects a TXT record in your DNS domain as: `_acme.<YOURDOMAIN> IN TXT secret`
 * A LetsEncrypt client e.g. "Certbot", "Nginx", "Traefik", etc, talks to LetsEncrypt servers using ACME protocol. (ACME=Automated Certificate Management Environment)
 * For stand alone web servers, Certbot (official LetsEncrypt client), obtains and installs SSL certificates (automatically) for Apache and Nginx web servers - using HTTP challenge. This needs related certbot plugin.
 * To obtain wild-card certificate (`*.demo.wbitt.com`) , you will need a DNS plugin related to your DNS provider, as wild-card certificates can only be issued through DNS challenge. Also, DNS plugin does not automatically install SSL certificates to your web server. That part you will need to do manually. It is demonstrated for you in the relevant section of this article.
@@ -26,10 +28,12 @@ A picture is worth a thousand words, so here are two pictures for you:
 
 | ![dia-http-challenge.png](dia-http-challenge.png) |
 | ------------------------------------------------- |
+| HTTP Challenge expects a file `http://<YOUR_DOMAIN>/.well-known/acme-challenge/<TOKEN>` |
 
 
 | ![dia-dns-challenge.png](dia-dns-challenge.png) |
 | ----------------------------------------------- |
+| DNS challenge expects a TXT record in your DNS `_acme.<YOURDOMAIN> IN TXT secret` |
 
 
 
