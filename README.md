@@ -830,7 +830,8 @@ Found the following certs:
 ```
 
 
-Now, manually edit the Apache vhost configuration and SSL configuration files:
+Now, manually edit the Apache vhost configuration and SSL configuration files. Add the following three Rewrite* commands/directives to `dog.demo.wbitt.com` and `jumpbox.demo.wbitt.com` vhosts in /etc/httpd/conf.d/vhosts.conf file.
+
 
 ```
 [root@jumpbox vhosts]# vi /etc/httpd/conf.d/vhosts.conf 
@@ -846,12 +847,11 @@ RewriteRule ^ https://%{SERVER_NAME}%{REQUEST_URI} [END,NE,R=permanent]
 
 . . . 
 ```
-Add these three Rewrite* commands/directives to `dog.demo.wbitt.com` and `jumpbox.demo.wbitt.com` vhosts in this file.
 
 
 Then, edit the `/etc/httpd/conf.d/vhosts-le-ssl.conf` file and add a `VirtualHost *:443` section in the way shown below, for each virtual host you have in `/etc/httpd/conf.d/vhosts.conf` file. Since we are using a wild-card certificate, we will use the same path for `fullchain.pem` and `privkey.pem` file in all SSL virtual hosts (`cat`, `dog` and `jumpbox` ) 
 
-``
+```
 [root@jumpbox vhosts]# cat /etc/httpd/conf.d/vhosts-le-ssl.conf 
 <IfModule mod_ssl.c>
 <VirtualHost *:443>
@@ -893,8 +893,8 @@ Include /etc/letsencrypt/options-ssl-apache.conf
 
 After these modifications, simply restart Apache server:
 
-````
-systemctl restart httpd
+```
+[root@jumpbox vhosts]# systemctl restart httpd
 ```
 
 
