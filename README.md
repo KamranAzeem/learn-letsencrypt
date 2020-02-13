@@ -4,6 +4,12 @@ I will want to show you how easy it is to use LetsEncrypt to obtain free (and va
 
 Presentation on the same topic can be found [here](https://docs.google.com/presentation/d/1Hf7OLIFVJ3RhTvexMMymiwcbgQ93oYDMkt5NYnENFkE/edit?usp=sharing).
 
+## Videos based on this material:
+* [[Urdu/Hindi] Introduction to LetsEncrypt - Basics - 1/2 - Theory](https://youtu.be/wu9yYSKFLVs)
+* [[Urdu/Hindi] Introduction to LetsEncrypt - Basics - 2/2 - Demo](https://youtu.be/OvQISuaFnX8)
+* [[English] Introduction to LetsEncrypt - Basics - Part 1/2 - Theory](https://youtu.be/fqsHCu1CDCs)
+* [[English ] Introduction to LetsEncrypt - Basics - Part 2/2 - Demo](https://youtu.be/3jNPSRUBA7Q)
+
 ## What is LetsEncrypt:
 * The idea to “Lets Encrypt the Internet - for free” became simply: "LetsEncrypt"
 * Objective was to lower the complexity of acquiring and setting up SSL certificates for HTTPS
