@@ -1,8 +1,14 @@
 # Learn to use LetsEncrypt
 
-I want to show you how easy it is to use LetsEncrypt to obtain free (and valid) SSL certificate for your web server - using HTTP and DNS challenges.
+I want to show you how easy it is to use LetsEncrypt to obtain free (and valid) SSL/TLS certificate(s) for your web server - using HTTP and DNS challenges.
 
 Presentation on the same topic can be found [here](https://docs.google.com/presentation/d/1Hf7OLIFVJ3RhTvexMMymiwcbgQ93oYDMkt5NYnENFkE/edit?usp=sharing).
+
+**Note:** This article deals with LetsEncrypt, and does not go into details of how HTTPS protocol works. That is a separate discussion. To learn more about HTTPS and related technologies, you should start from the following articles:
+
+* **HTTPS:** [https://en.wikipedia.org/wiki/HTTPS](https://en.wikipedia.org/wiki/HTTPS)
+* **SSL/TLS Certificates:** [https://en.wikipedia.org/wiki/Public_key_certificate](https://en.wikipedia.org/wiki/Public_key_certificate)
+* **TLS:** [https://en.wikipedia.org/wiki/Transport_Layer_Security](https://en.wikipedia.org/wiki/Transport_Layer_Security)
 
 ## Videos based on this material:
 * [[Urdu/Hindi] Introduction to LetsEncrypt - Basics - 1/2 - Theory](https://youtu.be/wu9yYSKFLVs)
@@ -289,7 +295,17 @@ IMPORTANT NOTES:
 
 **Note:** Each time certbot runs, it creates a new log file under `/var/log/letsencrypt`. That log file contains all the information about a particular run. The most recent file is always named `letsencrypt.log`. Older files in that directory get a number appended to their name, such as `letsencrypt.log.1` .
 
-So the above `certbot run` resulted in some staging SSL certificate issued for the hostname/FQDN `cat.demo.wbitt.com`. The fact that the certificate came from a staging server, can be checked from the log file:
+
+**Note:** If you were to be watching server's Apache logs on another terminal  while running the `certbot` command above, you would have seen entries in Apache's `access_log` made by the LetsEncrypt servers, trying to validate the challenge - get a particular file: `/.well-known/acme-challenge/J7YeNAeFBBvSFanwVancARJuINW0q7ADBFSYbSVtf-0` - from four different sources / IP addresses. Since all the HTTP responses are `200`, we can be certain that LetsEncrypt servers were successful in validating that fact that the challenge was setup correctly, and is fulfilled.
+```
+52.58.118.98 - - [11/Feb/2020:21:33:15 +0000] "GET /.well-known/acme-challenge/J7YeNAeFBBvSFanwVancARJuINW0q7ADBFSYbSVtf-0 HTTP/1.1" 200 87 "-" "Mozilla/5.0 (compatible; Let's Encrypt validation server; +https://www.letsencrypt.org)"
+18.224.20.83 - - [11/Feb/2020:21:33:16 +0000] "GET /.well-known/acme-challenge/J7YeNAeFBBvSFanwVancARJuINW0q7ADBFSYbSVtf-0 HTTP/1.1" 200 87 "-" "Mozilla/5.0 (compatible; Let's Encrypt validation server; +https://www.letsencrypt.org)"
+66.133.109.36 - - [11/Feb/2020:21:33:16 +0000] "GET /.well-known/acme-challenge/J7YeNAeFBBvSFanwVancARJuINW0q7ADBFSYbSVtf-0 HTTP/1.1" 200 87 "-" "Mozilla/5.0 (compatible; Let's Encrypt validation server; +https://www.letsencrypt.org)"
+34.211.60.134 - - [11/Feb/2020:21:33:16 +0000] "GET /.well-known/acme-challenge/J7YeNAeFBBvSFanwVancARJuINW0q7ADBFSYbSVtf-0 HTTP/1.1" 200 87 "-" "Mozilla/5.0 (compatible; Let's Encrypt validation server; +https://www.letsencrypt.org)"
+```
+
+
+Right, so the above `certbot run` resulted in some staging SSL certificate issued for the hostname/FQDN `cat.demo.wbitt.com`. The fact that the certificate came from a staging server, can be checked from the log file:
 
 ```
 [root@jumpbox ~]# grep 'Sending GET request' /var/log/letsencrypt/letsencrypt.log
@@ -1025,5 +1041,11 @@ No certs found.
 [root@jumpbox ~]# 
 ```
 
+# Further reading:
+* [https://en.wikipedia.org/wiki/HTTPS](https://en.wikipedia.org/wiki/HTTPS)
+* [https://en.wikipedia.org/wiki/Public_key_certificate](https://en.wikipedia.org/wiki/Public_key_certificate)
+* [https://en.wikipedia.org/wiki/Transport_Layer_Security](https://en.wikipedia.org/wiki/Transport_Layer_Security)
+* [https://letsencrypt.org/how-it-works/](https://letsencrypt.org/how-it-works/)
+ 
 
 This concludes this article.
