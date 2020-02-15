@@ -11,10 +11,10 @@ Presentation on the same topic can be found [here](https://docs.google.com/prese
 * **TLS:** [https://en.wikipedia.org/wiki/Transport_Layer_Security](https://en.wikipedia.org/wiki/Transport_Layer_Security)
 
 ## Videos based on this material:
-* [[Urdu/Hindi] Introduction to LetsEncrypt - Basics - 1/2 - Theory](https://youtu.be/h2ypb7CQESc)
-* [[Urdu/Hindi] Introduction to LetsEncrypt - Basics - 2/2 - Demo](https://youtu.be/OvQISuaFnX8)
+* [[Urdu/Hindi] Introduction to LetsEncrypt - Basics - 1/2 - Theory](https://youtu.be/Glf-EKu6qo4)
+* [[Urdu/Hindi] Introduction to LetsEncrypt - Demo - 2/2 - Demo](https://youtu.be/OvQISuaFnX8)
 * [[English] Introduction to LetsEncrypt - Basics - Part 1/2 - Theory](https://youtu.be/fqsHCu1CDCs)
-* [[English ] Introduction to LetsEncrypt - Basics - Part 2/2 - Demo](https://youtu.be/3jNPSRUBA7Q)
+* [[English ] Introduction to LetsEncrypt - Demo - Part 2/2 - Demo](https://youtu.be/3jNPSRUBA7Q)
 
 ## What is LetsEncrypt:
 * The idea to “Lets Encrypt the Internet - for free” became simply: "LetsEncrypt"
